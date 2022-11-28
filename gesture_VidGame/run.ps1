@@ -1,0 +1,2 @@
+start-Process c:/Users/Gunnl/OneDrive/Documents/9.onn/Tolvusjon/.opencv/Scripts/python.exe c:/Users/Gunnl/OneDrive/Documents/9.onn/Tolvusjon/computer_vision_group_project/gesture_VidGame/main.py ;
+start-Process c:/Users/Gunnl/OneDrive/Documents/9.onn/Tolvusjon/.opencv/Scripts/python.exe c:/Users/Gunnl/OneDrive/Documents/9.onn/Tolvusjon/computer_vision_group_project/gesture_VidGame/camera.py
