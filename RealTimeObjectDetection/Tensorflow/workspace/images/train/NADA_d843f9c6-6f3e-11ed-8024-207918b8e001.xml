@@ -1,0 +1,26 @@
+<annotation>
+	<folder>colectedimages</folder>
+	<filename>NADA_d843f9c6-6f3e-11ed-8024-207918b8e001.jpg</filename>
+	<path>C:\Users\Gunnl\OneDrive\Documents\9.onn\Tolvusjon\RealTimeObjectDetection\Tensorflow\workspace\images\colectedimages\NADA_d843f9c6-6f3e-11ed-8024-207918b8e001.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>nada</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>182</xmin>
+			<ymin>107</ymin>
+			<xmax>353</xmax>
+			<ymax>353</ymax>
+		</bndbox>
+	</object>
+</annotation>
