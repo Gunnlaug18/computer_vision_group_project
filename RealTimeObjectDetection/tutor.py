@@ -7,7 +7,7 @@ import time
 
 IMAGE_PATH = 'Tensorflow\\workspace\\images\\colectedimages'
 labels = ['LEFT','RIGHT', 'UP', 'DOWN', 'NADA']
-number_imgs = 20
+number_imgs = 10
 
 for lable in labels:
     os.mkdir('Tensorflow\\workspace\\images\\colectedimages\\'+ lable)

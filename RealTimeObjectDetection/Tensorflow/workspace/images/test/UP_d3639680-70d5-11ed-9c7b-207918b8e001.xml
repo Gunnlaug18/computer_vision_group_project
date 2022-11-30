@@ -1,0 +1,26 @@
+<annotation>
+	<folder>colectedimages</folder>
+	<filename>UP_d3639680-70d5-11ed-9c7b-207918b8e001.jpg</filename>
+	<path>C:\Users\Gunnl\OneDrive\Documents\9.onn\Tolvusjon\computer_vision_group_project\RealTimeObjectDetection\Tensorflow\workspace\images\colectedimages\UP_d3639680-70d5-11ed-9c7b-207918b8e001.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>up</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>328</xmin>
+			<ymin>99</ymin>
+			<xmax>528</xmax>
+			<ymax>423</ymax>
+		</bndbox>
+	</object>
+</annotation>
