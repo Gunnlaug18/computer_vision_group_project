@@ -1,0 +1,26 @@
+<annotation>
+	<folder>RIGHT</folder>
+	<filename>RIGHT_c8311d96-70d2-11ed-a5f5-004238d7d597.jpg</filename>
+	<path>C:\Users\irisf\Documents\HR-master\T-COMP-GROUPS\computer_vision_group_project\RealTimeObjectDetection\Tensorflow\workspace\images\colectedimages\RIGHT\RIGHT_c8311d96-70d2-11ed-a5f5-004238d7d597.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>right</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>171</xmin>
+			<ymin>96</ymin>
+			<xmax>486</xmax>
+			<ymax>411</ymax>
+		</bndbox>
+	</object>
+</annotation>

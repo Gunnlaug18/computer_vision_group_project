@@ -1,0 +1,26 @@
+<annotation>
+	<folder>colectedimages_stei</folder>
+	<filename>UP_cc52fdac-7185-11ed-9781-004238d7d597.jpg</filename>
+	<path>C:\Users\Gunnl\OneDrive\Documents\9.onn\Tolvusjon\more_img\colectedimages_stei\UP_cc52fdac-7185-11ed-9781-004238d7d597.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>up</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>333</xmin>
+			<ymin>100</ymin>
+			<xmax>529</xmax>
+			<ymax>469</ymax>
+		</bndbox>
+	</object>
+</annotation>

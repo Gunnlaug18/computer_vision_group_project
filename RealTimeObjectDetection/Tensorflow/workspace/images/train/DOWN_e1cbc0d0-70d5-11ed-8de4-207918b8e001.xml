@@ -1,0 +1,26 @@
+<annotation>
+	<folder>colectedimages</folder>
+	<filename>DOWN_e1cbc0d0-70d5-11ed-8de4-207918b8e001.jpg</filename>
+	<path>C:\Users\Gunnl\OneDrive\Documents\9.onn\Tolvusjon\computer_vision_group_project\RealTimeObjectDetection\Tensorflow\workspace\images\colectedimages\DOWN_e1cbc0d0-70d5-11ed-8de4-207918b8e001.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>down</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>320</xmin>
+			<ymin>178</ymin>
+			<xmax>497</xmax>
+			<ymax>336</ymax>
+		</bndbox>
+	</object>
+</annotation>

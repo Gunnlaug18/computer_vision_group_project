@@ -1,0 +1,26 @@
+<annotation>
+	<folder>colectedimages_per2</folder>
+	<filename>RIGHT_b88f25d0-7184-11ed-b2db-004238d7d597.jpg</filename>
+	<path>C:\Users\Gunnl\OneDrive\Documents\9.onn\Tolvusjon\more_img\colectedimages_per2\RIGHT_b88f25d0-7184-11ed-b2db-004238d7d597.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>right</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>256</xmin>
+			<ymin>170</ymin>
+			<xmax>557</xmax>
+			<ymax>385</ymax>
+		</bndbox>
+	</object>
+</annotation>

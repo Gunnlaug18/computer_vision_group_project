@@ -1,0 +1,26 @@
+<annotation>
+	<folder>NADA</folder>
+	<filename>NADA_f6755aab-70d2-11ed-94f9-004238d7d597.jpg</filename>
+	<path>C:\Users\irisf\Documents\HR-master\T-COMP-GROUPS\computer_vision_group_project\RealTimeObjectDetection\Tensorflow\workspace\images\colectedimages\NADA\NADA_f6755aab-70d2-11ed-94f9-004238d7d597.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>nada</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>148</xmin>
+			<ymin>65</ymin>
+			<xmax>514</xmax>
+			<ymax>431</ymax>
+		</bndbox>
+	</object>
+</annotation>

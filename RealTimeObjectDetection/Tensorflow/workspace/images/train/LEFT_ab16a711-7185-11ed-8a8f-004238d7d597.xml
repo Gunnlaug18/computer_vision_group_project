@@ -1,0 +1,26 @@
+<annotation>
+	<folder>colectedimages_stei</folder>
+	<filename>LEFT_ab16a711-7185-11ed-8a8f-004238d7d597.jpg</filename>
+	<path>C:\Users\Gunnl\OneDrive\Documents\9.onn\Tolvusjon\more_img\colectedimages_stei\LEFT_ab16a711-7185-11ed-8a8f-004238d7d597.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>left</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>154</xmin>
+			<ymin>215</ymin>
+			<xmax>392</xmax>
+			<ymax>409</ymax>
+		</bndbox>
+	</object>
+</annotation>

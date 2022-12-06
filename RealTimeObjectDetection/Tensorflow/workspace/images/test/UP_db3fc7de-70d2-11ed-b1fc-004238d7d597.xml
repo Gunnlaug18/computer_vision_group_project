@@ -1,0 +1,26 @@
+<annotation>
+	<folder>UP</folder>
+	<filename>UP_db3fc7de-70d2-11ed-b1fc-004238d7d597.jpg</filename>
+	<path>C:\Users\irisf\Documents\HR-master\T-COMP-GROUPS\computer_vision_group_project\RealTimeObjectDetection\Tensorflow\workspace\images\colectedimages\UP\UP_db3fc7de-70d2-11ed-b1fc-004238d7d597.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>up</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>235</xmin>
+			<ymin>83</ymin>
+			<xmax>531</xmax>
+			<ymax>379</ymax>
+		</bndbox>
+	</object>
+</annotation>

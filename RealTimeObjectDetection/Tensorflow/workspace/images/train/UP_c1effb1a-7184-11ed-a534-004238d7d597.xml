@@ -1,0 +1,26 @@
+<annotation>
+	<folder>colectedimages_per2</folder>
+	<filename>UP_c1effb1a-7184-11ed-a534-004238d7d597.jpg</filename>
+	<path>C:\Users\Gunnl\OneDrive\Documents\9.onn\Tolvusjon\more_img\colectedimages_per2\UP_c1effb1a-7184-11ed-a534-004238d7d597.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>up</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>274</xmin>
+			<ymin>112</ymin>
+			<xmax>442</xmax>
+			<ymax>414</ymax>
+		</bndbox>
+	</object>
+</annotation>

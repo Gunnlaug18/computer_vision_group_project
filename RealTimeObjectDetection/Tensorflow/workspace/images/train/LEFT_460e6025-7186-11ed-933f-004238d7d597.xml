@@ -1,0 +1,26 @@
+<annotation>
+	<folder>colectedimages_fann</folder>
+	<filename>LEFT_460e6025-7186-11ed-933f-004238d7d597.jpg</filename>
+	<path>C:\Users\Gunnl\OneDrive\Documents\9.onn\Tolvusjon\more_img\colectedimages_fann\LEFT_460e6025-7186-11ed-933f-004238d7d597.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>left</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>239</xmin>
+			<ymin>177</ymin>
+			<xmax>507</xmax>
+			<ymax>359</ymax>
+		</bndbox>
+	</object>
+</annotation>

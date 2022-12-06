@@ -1,0 +1,26 @@
+<annotation>
+	<folder>colectedimages_stei</folder>
+	<filename>RIGHT_be26e2ef-7185-11ed-bb6a-004238d7d597.jpg</filename>
+	<path>C:\Users\Gunnl\OneDrive\Documents\9.onn\Tolvusjon\more_img\colectedimages_stei\RIGHT_be26e2ef-7185-11ed-bb6a-004238d7d597.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>right</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>201</xmin>
+			<ymin>218</ymin>
+			<xmax>445</xmax>
+			<ymax>461</ymax>
+		</bndbox>
+	</object>
+</annotation>

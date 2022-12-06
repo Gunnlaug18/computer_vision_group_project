@@ -1,0 +1,26 @@
+<annotation>
+	<folder>colectedimages_aron</folder>
+	<filename>DOWN_a99382ee-7181-11ed-94b2-004238d7d597.jpg</filename>
+	<path>C:\Users\Gunnl\OneDrive\Documents\9.onn\Tolvusjon\more_img\colectedimages_aron\DOWN_a99382ee-7181-11ed-94b2-004238d7d597.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>down</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>260</xmin>
+			<ymin>161</ymin>
+			<xmax>493</xmax>
+			<ymax>373</ymax>
+		</bndbox>
+	</object>
+</annotation>

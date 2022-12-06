@@ -1,0 +1,26 @@
+<annotation>
+	<folder>LEFT</folder>
+	<filename>LEFT_16a858fc-70d1-11ed-b2f3-18cc18a6f914.jpg</filename>
+	<path>C:\Users\aisha\Documents\computer_vision_group_project\RealTimeObjectDetection\Tensorflow\workspace\images\colectedimages\LEFT\LEFT_16a858fc-70d1-11ed-b2f3-18cc18a6f914.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>left</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>99</xmin>
+			<ymin>150</ymin>
+			<xmax>314</xmax>
+			<ymax>321</ymax>
+		</bndbox>
+	</object>
+</annotation>

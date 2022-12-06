@@ -1,0 +1,26 @@
+<annotation>
+	<folder>colectedimages_fann</folder>
+	<filename>UP_601408c6-7186-11ed-8b11-004238d7d597.jpg</filename>
+	<path>C:\Users\Gunnl\OneDrive\Documents\9.onn\Tolvusjon\more_img\colectedimages_fann\UP_601408c6-7186-11ed-8b11-004238d7d597.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>up</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>292</xmin>
+			<ymin>64</ymin>
+			<xmax>477</xmax>
+			<ymax>365</ymax>
+		</bndbox>
+	</object>
+</annotation>
