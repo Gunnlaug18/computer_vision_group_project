@@ -11,54 +11,16 @@ import cv2 as cv
 import numpy as np
 import mediapipe as mp
 import pyautogui
+import threading
+from pynput.keyboard import Key, Controller
 
 from utils import CvFpsCalc
 from model import KeyPointClassifier
 from model import PointHistoryClassifier
 
 
-def get_args():
-    parser = argparse.ArgumentParser()
 
-    parser.add_argument("--device", type=int, default=0)
-    parser.add_argument("--width", help='cap width', type=int, default=960)
-    parser.add_argument("--height", help='cap height', type=int, default=540)
-
-    parser.add_argument('--use_static_image_mode', action='store_true')
-    parser.add_argument("--min_detection_confidence",
-                        help='min_detection_confidence',
-                        type=float,
-                        default=0.7)
-    parser.add_argument("--min_tracking_confidence",
-                        help='min_tracking_confidence',
-                        type=int,
-                        default=0.5)
-
-    args = parser.parse_args()
-
-    return args
-
-
-def main():
-    # Argument parsing #################################################################
-    args = get_args()
-
-    cap_device = args.device
-    cap_width = args.width
-    cap_height = args.height
-
-    use_static_image_mode = args.use_static_image_mode
-    min_detection_confidence = args.min_detection_confidence
-    min_tracking_confidence = args.min_tracking_confidence
-
-    use_brect = True
-
-    # Camera preparation ###############################################################
-    cap = cv.VideoCapture(cap_device)
-    cap.set(cv.CAP_PROP_FRAME_WIDTH, cap_width)
-    cap.set(cv.CAP_PROP_FRAME_HEIGHT, cap_height)
-
-    # Model load #############################################################
+def right_frame(use_static_image_mode,min_detection_confidence,min_tracking_confidence,cap,use_brect):
     mp_hands = mp.solutions.hands
     hands = mp_hands.Hands(
         static_image_mode=use_static_image_mode,
@@ -112,6 +74,7 @@ def main():
 
         # Camera capture #####################################################
         ret, image = cap.read()
+        image = image[0:540,0:480]
         if not ret:
             break
         image = cv.flip(image, 1)  # Mirror display
@@ -123,6 +86,8 @@ def main():
         image.flags.writeable = False
         results = hands.process(image)
         image.flags.writeable = True
+
+        keyboard = Controller()
 
         #  ####################################################################
         if results.multi_hand_landmarks is not None:
@@ -175,20 +140,84 @@ def main():
                     point_history_classifier_labels[most_common_fg_id[0][0]],
                 )
 
+                # if prediction != prev_prediction:
+                #     prev_prediction = prediction
+
+                #     if prediction == 'Up':
+                #         pyautogui.press('up')
+                #     elif prediction == 'Down':
+                #         pyautogui.press('down')
+                #     elif prediction == 'Left':
+                #         pyautogui.press('left')
+                #     elif prediction == 'Right':
+                #         pyautogui.press('right')
+                #     elif prediction == 'Null':
+                #         # pyautogui.press('space')
+                #         prev_prediction = 0
+
+                # if prediction != prev_prediction:
+                #     prev_prediction = prediction
+
+                #     if prediction == 'Up':
+                #         pyautogui.keyDown('space')
+                #     elif prediction == 'Down':
+                #         pyautogui.keyDown('down')
+                #     elif prediction == 'Left':
+                #         pyautogui.keyDown('left')
+                #     elif prediction == 'Right':
+                #         pyautogui.keyDown('right')
+                #     elif prediction == 'Null':
+                #         # pyautogui.press('space')
+                #         # pyautogui.keyUp('space')
+                #         # pyautogui.keyUp('down')
+                #         # pyautogui.keyUp('right')
+                #         # pyautogui.keyUp('left')
+                #         prev_prediction = 0
                 if prediction != prev_prediction:
                     prev_prediction = prediction
-
+                    # print(time.time())
                     if prediction == 'Up':
-                        pyautogui.press('up')
+                        keyboard.press(Key.up)
+                        keyboard.release(Key.up)
+                        # pyautogui.press('up')
                     elif prediction == 'Down':
-                        pyautogui.press('down')
+                        keyboard.press(Key.down)
+                        keyboard.release(Key.down)
+                        # pyautogui.press('down')
                     elif prediction == 'Left':
-                        pyautogui.press('left')
+                        keyboard.press(Key.left)
+                        keyboard.release(Key.left)
+                        # pyautogui.press('left')
                     elif prediction == 'Right':
-                        pyautogui.press('right')
+                        keyboard.press(Key.right)
+                        keyboard.release(Key.right)
+                        # pyautogui.press('right')
                     elif prediction == 'Null':
                         # pyautogui.press('space')
                         prev_prediction = 0
+                # if prediction != prev_prediction:
+                #     prev_prediction = prediction
+                #     # print(time.time())
+                #     if prediction == 'Up':
+                #         keyboard.press(Key.space)
+                #         keyboard.release(Key.space)
+                #         # pyautogui.press('up')
+                #     elif prediction == 'Down':
+                #         keyboard.press(Key.down)
+                #         # keyboard.release(Key.down)
+                #         # pyautogui.press('down')
+                #     elif prediction == 'Left':
+                #         keyboard.press(Key.left)
+                #         # keyboard.release(Key.left)
+                #         # pyautogui.press('left')
+                #     elif prediction == 'Right':
+                #         keyboard.press(Key.right)
+                #         # keyboard.release(Key.right)
+                #         # pyautogui.press('right')
+                #     elif prediction == 'Null':
+                #         # pyautogui.press('space')
+                #         # prev_prediction = 0
+                #         print('Null')
                     
 
 
@@ -200,6 +229,392 @@ def main():
 
         # Screen reflection #############################################################
         cv.imshow('Hand Gesture Recognition', debug_image)
+
+
+
+def left_frame(use_static_image_mode,min_detection_confidence,min_tracking_confidence,cap,use_brect):
+    mp_hands = mp.solutions.hands
+    hands = mp_hands.Hands(
+        static_image_mode=use_static_image_mode,
+        max_num_hands=2,
+        min_detection_confidence=min_detection_confidence,
+        min_tracking_confidence=min_tracking_confidence,
+    )
+
+    keypoint_classifier = KeyPointClassifier()
+
+    point_history_classifier = PointHistoryClassifier()
+
+    # Read labels ###########################################################
+    with open('model/keypoint_classifier/keypoint_classifier_label.csv',
+              encoding='utf-8-sig') as f:
+        keypoint_classifier_labels = csv.reader(f)
+        keypoint_classifier_labels = [
+            row[0] for row in keypoint_classifier_labels
+        ]
+    with open(
+            'model/point_history_classifier/point_history_classifier_label.csv',
+            encoding='utf-8-sig') as f:
+        point_history_classifier_labels = csv.reader(f)
+        point_history_classifier_labels = [
+            row[0] for row in point_history_classifier_labels
+        ]
+
+    # FPS Measurement ########################################################
+    cvFpsCalc = CvFpsCalc(buffer_len=10)
+
+    # Coordinate history #################################################################
+    history_length = 16
+    point_history = deque(maxlen=history_length)
+
+    # Finger gesture history ################################################
+    finger_gesture_history = deque(maxlen=history_length)
+
+    #  ########################################################################
+    mode = 0
+
+    prev_prediction = 0
+
+    while True:
+        fps = cvFpsCalc.get()
+
+        # Process Key (ESC: end) #################################################
+        key = cv.waitKey(10)
+        if key == 27:  # ESC
+            break
+        number, mode = select_mode(key, mode)
+
+        # Camera capture #####################################################
+        ret, image = cap.read()
+        image = image[0:540,480:960]
+        if not ret:
+            break
+        image = cv.flip(image, 1)  # Mirror display
+        debug_image = copy.deepcopy(image)
+
+        # Detection implementation #############################################################
+        image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+
+        image.flags.writeable = False
+        results = hands.process(image)
+        image.flags.writeable = True
+
+        keyboard = Controller()
+
+        #  ####################################################################
+        if results.multi_hand_landmarks is not None:
+            for hand_landmarks, handedness in zip(results.multi_hand_landmarks,
+                                                  results.multi_handedness):
+                # Bounding box calculation
+                brect = calc_bounding_rect(debug_image, hand_landmarks)
+                # Landmark calculation
+                landmark_list = calc_landmark_list(debug_image, hand_landmarks)
+
+                # Conversion to relative coordinates / normalized coordinates
+                pre_processed_landmark_list = pre_process_landmark(
+                    landmark_list)
+                pre_processed_point_history_list = pre_process_point_history(
+                    debug_image, point_history)
+                # Write to the dataset file
+                logging_csv(number, mode, pre_processed_landmark_list,
+                            pre_processed_point_history_list)
+
+                # Hand sign classification
+                hand_sign_id = keypoint_classifier(pre_processed_landmark_list)
+                if hand_sign_id == "Nota applicable":  # Point gesture
+                    point_history.append(landmark_list[8])
+                else:
+                    point_history.append([0, 0])
+
+                # print(pre_processed_landmark_list)
+                # print(len(pre_processed_landmark_list))
+
+                # Finger gesture classification
+                finger_gesture_id = 0
+                point_history_len = len(pre_processed_point_history_list)
+                if point_history_len == (history_length * 2):
+                    finger_gesture_id = point_history_classifier(
+                        pre_processed_point_history_list)
+
+                # Calculates the gesture IDs in the latest detection
+                finger_gesture_history.append(finger_gesture_id)
+                most_common_fg_id = Counter(
+                    finger_gesture_history).most_common()
+
+                # Drawing part
+                debug_image = draw_bounding_rect(use_brect, debug_image, brect)
+                debug_image = draw_landmarks(debug_image, landmark_list)
+                debug_image,prediction = draw_info_text(
+                    debug_image,
+                    brect,
+                    handedness,
+                    keypoint_classifier_labels[hand_sign_id],
+                    point_history_classifier_labels[most_common_fg_id[0][0]],
+                )
+
+                # if prediction != prev_prediction:
+                #     prev_prediction = prediction
+
+                #     if prediction == 'Up':
+                #         pyautogui.press('w')
+                #     elif prediction == 'Down':
+                #         pyautogui.press('s')
+                #     elif prediction == 'Left':
+                #         pyautogui.press('a')
+                #     elif prediction == 'Right':
+                #         pyautogui.press('d')
+                #     elif prediction == 'Null':
+                #         # pyautogui.press('space')
+                #         prev_prediction = 0
+                
+                
+                if prediction != prev_prediction:
+                    prev_prediction = prediction
+                    # print(time.time())
+                    if prediction == 'Up':
+                        keyboard.press('w')
+                        keyboard.release('w')
+                    elif prediction == 'Down':
+                        keyboard.press('s')
+                        keyboard.release('s')
+                    elif prediction == 'Left':
+                        keyboard.press('a')
+                        keyboard.release('a')
+                    elif prediction == 'Right':
+                        keyboard.press('d')
+                        keyboard.release('d')
+                    elif prediction == 'Null':
+                        # pyautogui.press('space')
+                        prev_prediction = 0
+                
+                # if prediction != prev_prediction:
+                #     prev_prediction = prediction
+                #     # print(time.time())
+                #     if prediction == 'Up':
+                #         keyboard.press('q')
+                #         keyboard.release('q')
+                #     elif prediction == 'Down':
+                #         keyboard.press('s')
+                #         # keyboard.release('s')
+                #     elif prediction == 'Left':
+                #         keyboard.press('a')
+                #         # keyboard.release('a')
+                #     elif prediction == 'Right':
+                #         keyboard.press('d')
+                #         # keyboard.release('d')
+                #     elif prediction == 'Null':
+                #         # pyautogui.press('space')
+                #         prev_prediction = 0
+                    
+
+
+        else:
+            point_history.append([0, 0])
+
+        debug_image = draw_point_history(debug_image, point_history)
+        debug_image = draw_info(debug_image, fps, mode, number)
+
+        # Screen reflection #############################################################
+        cv.imshow('Left Frame', debug_image)
+
+
+def get_args():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--device", type=int, default=0)
+    parser.add_argument("--width", help='cap width', type=int, default=960)
+    parser.add_argument("--height", help='cap height', type=int, default=540)
+
+    parser.add_argument('--use_static_image_mode', action='store_true')
+    parser.add_argument("--min_detection_confidence",
+                        help='min_detection_confidence',
+                        type=float,
+                        default=0.7)
+    parser.add_argument("--min_tracking_confidence",
+                        help='min_tracking_confidence',
+                        type=int,
+                        default=0.5)
+
+    args = parser.parse_args()
+
+    return args
+
+
+def main():
+    # Argument parsing #################################################################
+    args = get_args()
+
+    cap_device = args.device
+    cap_width = args.width
+    cap_height = args.height
+
+    use_static_image_mode = args.use_static_image_mode
+    min_detection_confidence = args.min_detection_confidence
+    min_tracking_confidence = args.min_tracking_confidence
+
+    use_brect = True
+
+    # Camera preparation ###############################################################
+    cap = cv.VideoCapture(cap_device)
+    cap.set(cv.CAP_PROP_FRAME_WIDTH, cap_width)
+    cap.set(cv.CAP_PROP_FRAME_HEIGHT, cap_height)
+
+    # Model load #############################################################
+    # mp_hands = mp.solutions.hands
+    # hands = mp_hands.Hands(
+    #     static_image_mode=use_static_image_mode,
+    #     max_num_hands=2,
+    #     min_detection_confidence=min_detection_confidence,
+    #     min_tracking_confidence=min_tracking_confidence,
+    # )
+
+    # keypoint_classifier = KeyPointClassifier()
+
+    # point_history_classifier = PointHistoryClassifier()
+
+    # # Read labels ###########################################################
+    # with open('model/keypoint_classifier/keypoint_classifier_label.csv',
+    #           encoding='utf-8-sig') as f:
+    #     keypoint_classifier_labels = csv.reader(f)
+    #     keypoint_classifier_labels = [
+    #         row[0] for row in keypoint_classifier_labels
+    #     ]
+    # with open(
+    #         'model/point_history_classifier/point_history_classifier_label.csv',
+    #         encoding='utf-8-sig') as f:
+    #     point_history_classifier_labels = csv.reader(f)
+    #     point_history_classifier_labels = [
+    #         row[0] for row in point_history_classifier_labels
+    #     ]
+
+    # # FPS Measurement ########################################################
+    # cvFpsCalc = CvFpsCalc(buffer_len=10)
+
+    # # Coordinate history #################################################################
+    # history_length = 16
+    # point_history = deque(maxlen=history_length)
+
+    # # Finger gesture history ################################################
+    # finger_gesture_history = deque(maxlen=history_length)
+
+    # #  ########################################################################
+    # mode = 0
+
+    # prev_prediction = 0
+
+    # while True:
+    #     fps = cvFpsCalc.get()
+
+    #     # Process Key (ESC: end) #################################################
+    #     key = cv.waitKey(10)
+    #     if key == 27:  # ESC
+    #         break
+    #     number, mode = select_mode(key, mode)
+
+    #     # Camera capture #####################################################
+    #     ret, image = cap.read()
+    #     if not ret:
+    #         break
+    #     image = cv.flip(image, 1)  # Mirror display
+    #     debug_image = copy.deepcopy(image)
+
+    #     # Detection implementation #############################################################
+    #     image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+
+    #     image.flags.writeable = False
+    #     results = hands.process(image)
+    #     image.flags.writeable = True
+
+    #     #  ####################################################################
+    #     if results.multi_hand_landmarks is not None:
+    #         for hand_landmarks, handedness in zip(results.multi_hand_landmarks,
+    #                                               results.multi_handedness):
+    #             # Bounding box calculation
+    #             brect = calc_bounding_rect(debug_image, hand_landmarks)
+    #             # Landmark calculation
+    #             landmark_list = calc_landmark_list(debug_image, hand_landmarks)
+
+    #             # Conversion to relative coordinates / normalized coordinates
+    #             pre_processed_landmark_list = pre_process_landmark(
+    #                 landmark_list)
+    #             pre_processed_point_history_list = pre_process_point_history(
+    #                 debug_image, point_history)
+    #             # Write to the dataset file
+    #             logging_csv(number, mode, pre_processed_landmark_list,
+    #                         pre_processed_point_history_list)
+
+    #             # Hand sign classification
+    #             hand_sign_id = keypoint_classifier(pre_processed_landmark_list)
+    #             if hand_sign_id == "Nota applicable":  # Point gesture
+    #                 point_history.append(landmark_list[8])
+    #             else:
+    #                 point_history.append([0, 0])
+
+    #             # print(pre_processed_landmark_list)
+    #             # print(len(pre_processed_landmark_list))
+
+    #             # Finger gesture classification
+    #             finger_gesture_id = 0
+    #             point_history_len = len(pre_processed_point_history_list)
+    #             if point_history_len == (history_length * 2):
+    #                 finger_gesture_id = point_history_classifier(
+    #                     pre_processed_point_history_list)
+
+    #             # Calculates the gesture IDs in the latest detection
+    #             finger_gesture_history.append(finger_gesture_id)
+    #             most_common_fg_id = Counter(
+    #                 finger_gesture_history).most_common()
+
+    #             # Drawing part
+    #             debug_image = draw_bounding_rect(use_brect, debug_image, brect)
+    #             debug_image = draw_landmarks(debug_image, landmark_list)
+    #             debug_image,prediction = draw_info_text(
+    #                 debug_image,
+    #                 brect,
+    #                 handedness,
+    #                 keypoint_classifier_labels[hand_sign_id],
+    #                 point_history_classifier_labels[most_common_fg_id[0][0]],
+    #             )
+
+    #             if prediction != prev_prediction:
+    #                 prev_prediction = prediction
+
+    #                 if prediction == 'Up':
+    #                     pyautogui.press('up')
+    #                 elif prediction == 'Down':
+    #                     pyautogui.press('down')
+    #                 elif prediction == 'Left':
+    #                     pyautogui.press('left')
+    #                 elif prediction == 'Right':
+    #                     pyautogui.press('right')
+    #                 elif prediction == 'Null':
+    #                     # pyautogui.press('space')
+    #                     prev_prediction = 0
+                    
+
+
+    #     else:
+    #         point_history.append([0, 0])
+
+    #     debug_image = draw_point_history(debug_image, point_history)
+    #     debug_image = draw_info(debug_image, fps, mode, number)
+
+    #     # Screen reflection #############################################################
+    #     cv.imshow('Hand Gesture Recognition', debug_image)
+
+    t1 = threading.Thread(target=right_frame, args=(use_static_image_mode,min_detection_confidence,min_tracking_confidence,cap,use_brect,))
+    t2 = threading.Thread(target=left_frame, args=(use_static_image_mode,min_detection_confidence,min_tracking_confidence,cap,use_brect,))
+ 
+    # starting thread 1
+    t1.start()
+    # starting thread 2
+    t2.start()
+ 
+    # wait until thread 1 is completely executed
+    t1.join()
+    # wait until thread 2 is completely executed
+    t2.join()
+
 
     cap.release()
     cv.destroyAllWindows()
@@ -564,7 +979,7 @@ def draw_info(image, fps, mode, number):
                    cv.LINE_AA)
         if 0 <= number <= 9:
             cv.putText(image, "NUM:" + str(number), (10, 110),
-                       cv.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1,
+                       cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 1,
                        cv.LINE_AA)
     return image
 
