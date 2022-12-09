@@ -185,13 +185,20 @@ def valid_space(shape, grid):
     return True
 
 
-def check_lost(positions):
-    for pos in positions:
-        x, y = pos
+def check_lost(positions1, positions2):
+    flag1 = 10
+    flag2 = 20
+    neutral = 0
+    for pos1 in positions1:
+        x, y = pos1
         if y < 1:
-            return True
+            return True, flag1
+    for pos2 in positions2:
+        x, y = pos2
+        if y < 1:
+            return True, flag2
 
-    return False
+    return False, neutral
 
 
 def get_shape():
@@ -254,7 +261,7 @@ def draw_next_shape(next_shape1, next_shape2, surface):
     format2 = next_shape2.shape[next_shape2.rotation % len(next_shape2.shape)]
 
     sx = top_left_x + play_width + 50
-    sy = top_left_y + play_height/2 - 250
+    sy = top_left_y + play_height/2 - 280
     sx2 = top_left_x + play_width + 50
     sy2 = top_left_y + play_height/2 - 100
 
@@ -275,20 +282,23 @@ def draw_next_shape(next_shape1, next_shape2, surface):
     surface.blit(label2, (sx2 + 10, sy2 - 30))
 
 
-def update_score(nscore):
+def update_score(nscore1, nscore2):
     score = max_score()
 
-    with open('scores.txt', 'w') as f:
-        if int(score) > nscore:
-            f.write(str(score))
-        else:
-            f.write(str(nscore))
+    with open('scores.txt', 'a') as f:
+        if nscore1 > int(score):
+            f.write("P1 " + str(nscore1) + "\n")
+        if nscore2 > int(score):
+            f.write("P2 " + str(nscore2)+ "\n")
+        # else:
+        #     f.write(str(score))
 
 
 def max_score():
     with open('scores.txt', 'r') as f:
         lines = f.readlines()
-        score = lines[0].strip()
+        # score = lines[0].strip()
+        score = lines[-1].split()[-1]
 
     return score
 
@@ -331,7 +341,7 @@ def draw_window(surface, grid1, grid2, score1=0, score2=0, last_score = 0):
     sx = top_left_x + play_width + 50
     sy = top_left_y + play_height/2 - 100
 
-    surface.blit(label, (sx + 20, sy + 160))
+    surface.blit(label, (sx + 20, sy + 200))
     # current score Player 2
     font = pygame.font.SysFont('comicsans', 30)
     label = font.render('Score P2: ' + str(score2), 1, (255,255,255))
@@ -339,14 +349,14 @@ def draw_window(surface, grid1, grid2, score1=0, score2=0, last_score = 0):
     sx = top_left_x + play_width + 50
     sy = top_left_y + play_height/2 - 100
 
-    surface.blit(label, (sx + 20, sy + 200))
+    surface.blit(label, (sx + 20, sy + 240))
     # last score
     label = font.render('High Score: ' + last_score, 1, (255,255,255))
 
     sx = top_left_x + play_width
     sy = top_left_y + play_height/2 -100
 
-    surface.blit(label, (sx + 70, sy + 240))
+    surface.blit(label, (sx + 70, sy + 320))
 
     # moving the kubbur 
     # player 1
@@ -495,13 +505,17 @@ def main(win):  # *
         draw_next_shape(next_piece1, next_piece2, win)
         pygame.display.update()
 
-        if check_lost(locked_positions1):
-            draw_text_middle(win, "YOU LOST!", 80, (255,255,255))
+        lost, flag = check_lost(locked_positions1, locked_positions2)
+
+        if lost:#if returns true
+            if flag == 10:
+                draw_text_middle(win, "PLAYER 1 LOST!", 80, (255,255,255))
+            if flag == 20:
+                draw_text_middle(win, "PLAYER 2 LOST!", 80, (255,255,255))
             pygame.display.update()
             pygame.time.delay(1500)
             run = False
-            update_score(score1)
-            update_score(score2)
+            update_score(score1, score2)
 
 
 def main_menu(win):  # *
