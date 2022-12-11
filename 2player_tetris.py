@@ -7,8 +7,6 @@ pygame.font.init()
 # Leikglugginn
 s_width = 1000
 s_height = 800
-# s_width = 800
-# s_height = 700
 
 
 # tetris window 2x
@@ -290,14 +288,11 @@ def update_score(nscore1, nscore2):
             f.write("P1 " + str(nscore1) + "\n")
         if nscore2 > int(score):
             f.write("P2 " + str(nscore2)+ "\n")
-        # else:
-        #     f.write(str(score))
 
 
 def max_score():
     with open('scores.txt', 'r') as f:
         lines = f.readlines()
-        # score = lines[0].strip()
         score = lines[-1].split()[-1]
 
     return score
@@ -358,7 +353,7 @@ def draw_window(surface, grid1, grid2, score1=0, score2=0, last_score = 0):
 
     surface.blit(label, (sx + 70, sy + 320))
 
-    # moving the kubbur 
+    # moving the block 
     # player 1
     for i in range(len(grid1)):
         for j in range(len(grid1[i])):
@@ -370,28 +365,22 @@ def draw_window(surface, grid1, grid2, score1=0, score2=0, last_score = 0):
 
     pygame.draw.rect(surface, (255, 0, 0), (top_left_x_p1, top_left_y, play_width, play_height), 5)
     pygame.draw.rect(surface, (255, 0, 0), (top_left_x_p2, top_left_y, play_width, play_height), 5)
-    # pygame.draw.rect(surface, (255, 0, 0), (150, top_left_y, play_width, play_height), 5)
 
     draw_grid(surface, grid1, grid2)
-    #pygame.display.update()
 
 
-def main(win):  # *
+def main(win):
     last_score = max_score()
     locked_positions1 = {}
     locked_positions2 = {}
     grid1 = create_grid(locked_positions1)
-    # print(grid1)
     grid2 = create_grid(locked_positions2)
-    # print(grid2)
 
     change_piece1 = False
     change_piece2 = False
     run = True
-    # same_shape_before = get_shape()
     current_piece1 = get_shape()
     current_piece2 = get_shape()
-    # same_shape_after = get_shape()
     next_piece1 = get_shape()
     next_piece2 = get_shape()
     clock = pygame.time.Clock()
@@ -469,9 +458,6 @@ def main(win):  # *
 
         shape_pos1 = convert_shape_format(current_piece1)
         shape_pos2 = convert_shape_format(current_piece2)
-        # print("ABBA")
-        # print(shape_pos1)
-        # print(shape_pos2)
 
         for i in range(len(shape_pos1)):
             x, y = shape_pos1[i]
@@ -531,9 +517,6 @@ def main_menu(win):  # *
                 main(win)
 
     pygame.display.quit()
-
-# s_width = 800
-# s_height = 700
 
 win = pygame.display.set_mode((s_width, s_height))
 pygame.display.set_caption('TETRIS 2 PLAYER')
